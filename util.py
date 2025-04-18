@@ -1011,6 +1011,7 @@ def go_enrich_plot(m_genes, out_path,title='', save_max_term=10,plot_max_term=5,
             remain_idx += sdf.sort_values(by=['p_value']).index[:cut_term_n].tolist()
         anno_df = anno_df.loc[remain_idx,]
         anno_df = anno_df.sort_values(by=['source', 'p_value'])
+        anno_df['raw_adj_p_value'] = anno_df['p_value']
         anno_df['p_value'] = -np.log10(anno_df['p_value'])
         anno_df.to_excel(out_tab)
         time.sleep(3)
@@ -1091,7 +1092,7 @@ def bio_enrich_plot(df:pd.DataFrame,y,x,size,color,title='',size_log=False,ax=No
     new_xmax = xmax + 0.1 * (xmax - xmin)
     ax.set_xlim(new_xmin, new_xmax)
     plt.title(f'{title}',fontweight='bold')
-    plt.subplots_adjust(left=0.6, right=0.8, bottom=0.15, top=0.9)
+    plt.subplots_adjust(left=0.62, right=0.8, bottom=0.15, top=0.9)
     if fig_path is not None:
         make_dir(os.path.dirname(fig_path))
         plt.savefig(fig_path,dpi=200)
